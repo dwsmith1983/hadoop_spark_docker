@@ -182,3 +182,6 @@ host machines ip or DNS name.
 # Collaborators
 Much of this couldn't have been done without the help of
 [Yok](https://github.com/veerapatyok).
+
+# Docker Hub
+[dwsmith1983](https://hub.docker.com/u/dwsmith1983/)

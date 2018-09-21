@@ -5,7 +5,6 @@ USER root
 ADD requirements.txt /requirements.txt
 ADD conda_requirement_install.sh /conda_requirement_install.sh
 RUN chmod a+x /conda_requirement_install.sh
-RUN chmod a+x /appsmiths-1.0.0-py3-none-linux_x86_64.whl
 RUN ["sh", "/conda_requirement_install.sh"]
 
 RUN conda upgrade -y conda anaconda --a \
