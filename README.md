@@ -5,8 +5,8 @@ remember.
 * [big-data-europe](https://github.com/big-data-europe)
 * [Getty Images](https://github.com/gettyimages)
 * [SequenceIQ](https://github.com/sequenceiq)
-* [Jamie Pillora](https://github.com/jpillora) for
-DNSmasq
+* [Jamie Pillora](https://github.com/jpillora) for DNSmasq
+* [Eric Hough](https://github.com/ehough) for NFS server
 * [Portainer](https://portainer.io/)
 
 Before you start using these images or `Dockerfiles`,
