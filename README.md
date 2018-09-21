@@ -178,3 +178,7 @@ Then copy the URL into your local web browser and change the ip address to
 host machines ip or DNS name.
 
 ## Python Script
+
+# Collaborators
+Much of this couldn't have been done without the help of
+[Yok](https://github.com/veerapatyok).
