@@ -2,8 +2,7 @@
 I had to adapt my set up from many different
 configurations. Here is the short list of what I can
 remember.
-*
-[big-data-europe](https://github.com/big-data-europe)
+* [big-data-europe](https://github.com/big-data-europe)
 * [Getty Images](https://github.com/gettyimages)
 * [SequenceIQ](https://github.com/sequenceiq)
 * [Jamie Pillora](https://github.com/jpillora) for
