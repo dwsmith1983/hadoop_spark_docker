@@ -16,9 +16,10 @@ RUN apt-get update \
   && chmod a+x anaconda.sh \
   && ./anaconda.sh -b -p $CONDA_DIR \
   && rm ./anaconda.sh \
+  && $CONDA_DIR/bin/conda install python==3.6 \
   && $CONDA_DIR/bin/conda upgrade -y conda anaconda --a \
   && $CONDA_DIR/bin/conda install -y jupyterlab \
-  && $CONDA_DIR/bin/conda clean -y --a \ 
+  && $CONDA_DIR/bin/conda clean -y --a \
   && cd /opt \
   && git clone --recursive https://github.com/dmlc/xgboost \
   && cd xgboost \
