@@ -1,4 +1,4 @@
-FROM dwsmith1983/hadoop
+FROM dwsmith1983/hadoop_spark_docker_swarm.hadoop
 
 HEALTHCHECK CMD curl -f http://localhost:9870/ || exit 1
 

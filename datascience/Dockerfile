@@ -1,4 +1,4 @@
-FROM dwsmith1983/anaconda
+FROM dwsmith1983/hadoop_spark_docker_swarm.anaconda
 
 USER root
 

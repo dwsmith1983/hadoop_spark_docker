@@ -1,4 +1,4 @@
-FROM dwsmith1983/hadoop
+FROM dwsmith1983/hadoop_spark_docker_swarm.hadoop
 
 # GL Calcs path
 ENV LD_LIBRARY_PATH /pyglc/pyoil_ext
@@ -19,4 +19,3 @@ RUN curl -sL --retry 3 \
  && apt autoremove && apt autoclean
 
 WORKDIR $SPARK_HOME
-

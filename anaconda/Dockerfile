@@ -1,4 +1,4 @@
-FROM dwsmith1983/spark
+FROM dwsmith1983/hadoop_spark_docker_swarm.spark
 
 ENV PYTHONHASHSEED 0
 ENV PYTHONIOENCODING UTF-8
@@ -16,7 +16,7 @@ RUN apt-get update \
   && chmod a+x anaconda.sh \
   && ./anaconda.sh -b -p $CONDA_DIR \
   && rm ./anaconda.sh \
-  && $CONDA_DIR/bin/conda install python==3.6 \
+  && $CONDA_DIR/bin/conda install python==3.6.6 \
   && $CONDA_DIR/bin/conda upgrade -y conda anaconda --a \
   && $CONDA_DIR/bin/conda install -y jupyterlab \
   && $CONDA_DIR/bin/conda clean -y --a \
