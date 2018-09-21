@@ -1,0 +1,54 @@
+version: '3'
+services:
+  master:
+    image: dwsmith1983/data_science_conda
+    command: bin/spark-class org.apache.spark.deploy.master.Master
+    ports:
+      - 4040:4040
+      - 6066:6066
+      - 7077:7077
+      - 8001:8080
+      - 8888:8888
+    volumes:
+      - ./data:/tmp/data
+      - ./jupyter-work:/usr/spark-2.3.1/data
+      - nfsshare:/shared_cluster_data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == manager]
+
+  worker:
+    image: dwsmith1983/data_science_conda
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
+    hostname: worker
+    depends_on:
+      - master
+    links:
+      - master
+    ports:
+      - 8081:8081
+    volumes:
+      - ./data:/tmp/data
+      - nfsshare:/shared_cluster_data
+    deploy:
+      replicas: 4
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: [node.role == worker]
+
+volumes:
+  nfsshare:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=<ip>,nfsvers=4"
+      device: ":/"
+
+networks:
+    default:
+        external:
+            name: hadoop-spark-swarm-network

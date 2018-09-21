@@ -1,0 +1,13 @@
+blas
+Cython
+ipykernel
+jsonschema
+jupyterlab
+scipy
+mkl
+nbconvert
+numpy
+pandas
+protobuf
+PyYAML
+matplotlib
