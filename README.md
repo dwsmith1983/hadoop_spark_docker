@@ -93,6 +93,9 @@ less than the number of available worker nodes.
 2. On the manager node, launch the docker compose file with the same deploy
 command but change the `<file.yml>` and `<name of network>`.
 
+## Hadoop and Spark on Local Cluster
+Will add later
+
 # Shutting Down the Cluster
 1. Get a list of the running services with `docker service ls`.
 2. Then run `docker service rm <name, name, ...>` to rm the service.
@@ -170,6 +173,7 @@ Then copy the URL into your local web browser and change the ip address to host
 machines ip or DNS name.
 
 ## Python Script
+Will add later
 
 # Collaborators
 Much of this couldn't have been done without the help of
