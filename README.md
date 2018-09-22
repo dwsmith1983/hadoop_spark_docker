@@ -1,3 +1,20 @@
+# Motivation
+With so many Hadoop and Spark builds out there on Docker, why would we create
+another one? This was for two reasons:
+1. We had a lot of trouble getting many of these builds to run and work and
+2. Many of the builds were using older versions of Hadoop and Spark.
+
+Therefore, we decided to comb through many of the builds looking for pieces we
+could stitch together that would work with the latest versions and actually
+deploy seamlessly on a distributed cluster. We ended up borrowing ideas and
+parts of builds from a handful of developers as well as adding our own work
+arounds.
+
+I tried to remember and list everyone I used as a reference in resources;
+however, if you notice developer we forgot to attribute, send us the link to
+their (or your) GitHub and Docker repos. We will be able to recall if we went
+through code by seeing the name.
+
 # Resources
 I had to adapt my set up from many different configurations. Here is the short
 list of what I can remember.
