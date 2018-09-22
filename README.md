@@ -1,7 +1,6 @@
 # Resources
-I had to adapt my set up from many different
-configurations. Here is the short list of what I can
-remember.
+I had to adapt my set up from many different configurations. Here is the short
+list of what I can remember.
 * [big-data-europe](https://github.com/big-data-europe)
 * [Getty Images](https://github.com/gettyimages)
 * [SequenceIQ](https://github.com/sequenceiq)
@@ -9,11 +8,9 @@ remember.
 * [Eric Hough](https://github.com/ehough) for NFS server
 * [Portainer](https://portainer.io/)
 
-Before you start using these images or `Dockerfiles`,
-make sure to go through the scripts, configuration
-files, and `Dockerfiles` looking for network specific
-or user specific settings to change. Most will be
-marked `<name>`.
+Before you start using these images or `Dockerfiles`, make sure to go through
+the scripts, configuration files, and `Dockerfiles` looking for network specific
+or user specific settings to change. Most will be marked `<name>`.
 
 # Required Files Hadoop/Spark Python Docker Swarm
 + DNSmasq directory
@@ -90,9 +87,9 @@ to the command line.
 `docker swarm leave`.
 
 ## Spark Docker Swarm
-1. Update the `docker-compose.yml` to the desired settings, specify the
-image names, and set the replica number for the workers. Replica must be
-equal to or less than the number of available worker nodes.
+1. Update the `docker-compose.yml` to the desired settings, specify the image
+names, and set the replica number for the workers. Replica must be equal to or
+less than the number of available worker nodes.
 2. On the manager node, launch the docker compose file with the same deploy
 command but change the `<file.yml>` and `<name of network>`.
 
@@ -151,21 +148,16 @@ docker service scale spark_swarm_worker=7
 
 # Executing Python
 ## Replace the Notebook token with a Password
-By replacing the token with a password, we can
-store `http://dns_name:8888` into our browser and
-simple navigate to this address as opposed to
-copying the address and token when Jupyter lab or
-notebook launches.
+By replacing the token with a password, we can store `http://dns_name:8888` into
+our browser and simple navigate to this address as opposed to copying the
+address and token when Jupyter lab or notebook launches.
 
-This is optional. Simply comment out the lines at the
-bottom of the `Dockerfile` if you don't want to set
-this up.
-1. Run `jupyter notebook --generate-config` to
-generate the config file.
-2. Run `jupyter notebook password` and enter your
-password twice.
-3. Copy `jupyter_notebook_config.py` to the anaconda
-folder containing the `Dockerfile`.
+This is optional. Simply comment out the lines at the bottom of the `Dockerfile`
+if you don't want to set this up (anaconda folder).
+1. Run `jupyter notebook --generate-config` to generate the config file.
+2. Run `jupyter notebook password` and enter your password twice.
+3. Copy `jupyter_notebook_config.py` to the anaconda folder containing the
+`Dockerfile`.
 4. Build the docker.
 
 ## Jupyter Lab
@@ -174,8 +166,8 @@ datascience images. From the bash, run the command
 ```bash
 jupyter-lab --allow-root --ip=0.0.0.0
 ```
-Then copy the URL into your local web browser and change the ip address to
-host machines ip or DNS name.
+Then copy the URL into your local web browser and change the ip address to host
+machines ip or DNS name.
 
 ## Python Script
 

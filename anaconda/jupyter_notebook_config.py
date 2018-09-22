@@ -748,4 +748,4 @@
 #
 #  By default, all installed kernels are allowed.
 #c.KernelSpecManager.whitelist = set()
-echo c.NotebookApp.password='sha1:*392b17472585:350ce70ac183df9ae462d0cf887e89e9b253c112'
+echo c.NotebookApp.password='sha1:<hash>'
