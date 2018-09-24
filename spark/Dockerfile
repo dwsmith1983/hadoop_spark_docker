@@ -1,8 +1,5 @@
 FROM dwsmith1983/hadoop_spark_docker_swarm.hadoop
 
-# GL Calcs path
-ENV LD_LIBRARY_PATH /pyglc/pyoil_ext
-
 # SPARK
 ENV SPARK_VERSION 2.3.1
 ENV SPARK_PACKAGE spark-${SPARK_VERSION}-bin-without-hadoop
