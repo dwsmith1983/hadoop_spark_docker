@@ -7,6 +7,8 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK 1
 ENV CONDA_DIR /opt/conda
 ENV PATH $CONDA_DIR/bin:$PATH
 
+ENV JUPYTER_LAB jupyter-lab --allow-root --ip=0.0.0.0
+
 USER root
 
 RUN apt-get update \
@@ -19,6 +21,7 @@ RUN apt-get update \
   && $CONDA_DIR/bin/conda install python==3.6.6 \
   && $CONDA_DIR/bin/conda upgrade -y conda anaconda --a \
   && $CONDA_DIR/bin/conda install -y jupyterlab \
+  && $CONDA_DIR/bin/conda install -y -c conda-forge python-hdfs \
   && $CONDA_DIR/bin/conda clean -y --a \
   && cd /opt \
   && git clone --recursive https://github.com/dmlc/xgboost \

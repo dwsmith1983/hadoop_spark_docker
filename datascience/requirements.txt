@@ -8,7 +8,6 @@ mkl
 nbconvert
 numpy==1.14.5
 setuptools==39.1.0
-pyhamcrest
 pandas
 protobuf
 PyYAML
