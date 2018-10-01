@@ -80,7 +80,7 @@ This will build, tag, and push our images to our docker registry at
 2. Setup the desired configuration in `.conf`.
 3. Run `sh ./dnsmasq-run.sh`.
 
-## Hadoop Docker Swarm
+## Launching Hadoop Spark Cluster
 1. Update the `docker-compose.yml` to the desired settings, specify the
 image names, and set the replica number for the datanodes. Replica must be
 equal to or less than the number of available datanodes.
@@ -89,26 +89,19 @@ equal to or less than the number of available datanodes.
 compose file with
    ```bash
    docker stack deploy -c <file.yml> <name of network>
-   docker stack deploy -c docker-compose.yml hadoop
+   docker stack deploy -c docker-compose.yml cluster
    ```
 4. For the first run on the system, the `join-token` will be needed for the
 workers. On the manager node, run `docker swarm join-token worker`  to see
 the token.
 5. ssh into all the worker nodes and paste the token into the command line.
-6. Enter the container with `docker exec -it hadoop_swarm_namenode.... bash`
+6. Enter the container with `docker exec -it cluster_master.... bash`
 note that you can auto-complete the container name with `tab`.
 7. Test Hadoop is running correctly with
 `$HADOOP_HOME/bin/hdfs dfs -cat /user/test.md` which will print out `Success`
 to the command line.
 8. To drop a worker, ssh into the desired machine and enter
 `docker swarm leave`.
-
-## Spark Docker Swarm
-1. Update the `docker-compose.yml` to the desired settings, specify the image
-names, and set the replica number for the workers. Replica must be equal to or
-less than the number of available worker nodes.
-2. On the manager node, launch the docker compose file with the same deploy
-command but change the `<file.yml>` and `<name of network>`.
 
 ## Hadoop and Spark on Local Cluster
 Will add later
