@@ -46,13 +46,13 @@ or user specific settings to change. Most will be marked `<name>`.
   - Dockerfile
 + Anaconda Python directory
   - Dockerfile
-+ Data Science Dockerfile
++ Data Science directory
   - Dockerfile
   - requirements.txt
   - conda\_requirement\_install.sh
++ Grafana directory
 + build.sh
-+ docker-compose-hadoop.yml
-+ docker-compose-spark.yml
++ docker-compose.yml
 + hadoop.env
 + pyspark_example.py
 
@@ -89,7 +89,7 @@ equal to or less than the number of available datanodes.
 compose file with
    ```bash
    docker stack deploy -c <file.yml> <name of network>
-   docker stack deploy -c docker-compose-hadoop.yml hadoop
+   docker stack deploy -c docker-compose.yml hadoop
    ```
 4. For the first run on the system, the `join-token` will be needed for the
 workers. On the manager node, run `docker swarm join-token worker`  to see
@@ -116,23 +116,55 @@ Will add later
 # Shutting Down the Cluster
 1. Get a list of the running services with `docker service ls`.
 2. Then run `docker service rm <name, name, ...>` to rm the service.
+3. Then run `docker stack rm <stack-name>`(`docker stack rm cluster`) to
+remove the stack.
 
 # Enabling Portainer
 Once the cluster is running, we access the manager node and enter the following
 commands:
 1. ```bash
-   docker service create --name portainer_agent --network
-   hadoop-spark-swarm-network -e AGENT_CLUSTER_ADDR=task.portainer_agent --mode
-   global --constraint 'node.platform.os==linux' --mount type=bind,
-   src=//var/run/docker.sock, dst=/var/run/docker.sock --mount type=bind,
-   src=//var/lib/docker/volumes, dst=/var/lib/docker/volumes portainer/agent
+      docker service create \
+      --name portainer \
+      --network hadoop-spark-swarm-network \
+      --publish 9000:9000 \
+      --mount src=portainer_data,dst=/data \
+      --replicas=1 \
+      --constraint 'node.role == manager' \
+      portainer/portainer -H "tcp://tasks.portainer_agent:9001"
+      --tlsskipverify
    ```
 2. ```bash
-   docker service create --name portainer --publish 9000:9000 --network
-   hadoop-spark-swarm-network --replicas=1 --constraint 'node.role==manager'
-   portainer/portainer -H "tcp://tasks.portainer_agent:9001" --tlsskipverify
+      docker service create \
+      --name portainer_agent \
+      --network hadoop-spark-swarm-network \
+      -e AGENT_CLUSTER_ADDR=tasks.portainer_agent \
+      --mode global \
+      --constraint 'node.platform.os == linux' \
+      --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock \
+      --mount type=bind,src=//var/lib/docker/volumes,dst=/var/lib/docker/volumes \
+      portainer/agent
    ```
 3. Check portainer.io `<dns_name>:9000` for the join status of the workers.
+
+# Enabling Grafana
+Once the cluster is running, we access the manager node and enter the
+following commands:
+1. Deploy grafana, influxDB, Cadvisor with
+`docker stack deploy -c docker-compose-monitor.yml monitor`
+2. Create cadvisor database in influxDB container(`docker exec -it <influxDB container ID> bash`) with `influx -execute 'CREATE DATABASE cadvisor'`
+3. In your browser, access grafana dashboard with `ip:80`
+4. Login with `user: admin` and `password: admin` and change the password
+5. Add source: change Name to `influx`, Type to `influxDB`, URL to
+`http://influx:8086`, and Database to `cadvisor`. Then click the
+`save and test` button
+6. Import dashboard with the `Manage` button (in left panel) with
+`Docker Swarm Dashboard-<gen_id>.json`
+
+## Chonograf(influxDB dashboard)
+`<ip>:9001`
+
+### Reference
+`https://botleg.com/stories/monitoring-docker-swarm-with-cadvisor-influxdb-and-grafana/`
 
 # Enable NFS
 In the `docker-compose-spark.yml`, we needed to add
@@ -186,8 +218,9 @@ datascience images. From the bash, run the command
 ```bash
 jupyter-lab --allow-root --ip=0.0.0.0
 ```
-Then copy the URL into your local web browser and change the ip address to host
-machines ip or DNS name.
+Additionally, the environment variable `JUPYTER_LAB` has been created to take
+care of the options needing to be passed. Then copy the URL into your local
+web browser and change the ip address to host machines ip or DNS name.
 
 ## Python Script
 Will add later

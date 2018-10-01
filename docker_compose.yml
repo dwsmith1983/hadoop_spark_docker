@@ -1,7 +1,7 @@
 version: '3'
 services:
   master:
-    image: dwsmith1983/data_science_conda
+    image: dwsmith1983/hadoop_spark_docker_swarm.datascience
     command: bin/spark-class org.apache.spark.deploy.master.Master
     ports:
       - 4040:4040
@@ -11,17 +11,15 @@ services:
       - 8888:8888
     volumes:
       - ./data:/tmp/data
-      - ./jupyter-work:/usr/spark-2.3.1/data
+      - ./py-src:/cluster_data
       - nfsshare:/shared_cluster_data
     deploy:
       replicas: 1
-      restart_policy:
-        condition: on-failure
       placement:
         constraints: [node.role == manager]
 
   worker:
-    image: dwsmith1983/data_science_conda
+    image: dwsmith1983/hadoop_spark_docker_swarm.datascience
     command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
     hostname: worker
     depends_on:
@@ -35,8 +33,38 @@ services:
       - nfsshare:/shared_cluster_data
     deploy:
       replicas: 4
-      restart_policy:
-        condition: on-failure
+      placement:
+        constraints: [node.role == worker]
+
+  namenode:
+    image: dwsmith1983/hadoop_spark_docker_swarm.namenode
+    hostname: namenode
+    ports:
+      - 9870:9870
+      - 9820:9820
+    volumes:
+      - ./namenode:/hadoop/dfs/name
+      - ./hadoop-data:/hadoop-data
+    environment:
+      - CLUSTER_NAME=production
+    env_file:
+      - ./hadoop.env
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+  datanode:
+    image: dwsmith1983/hadoop_spark_docker_swarm.datanode
+    volumes:
+      - ./datanode:/hadoop/dfs/data
+    env_file:
+      - ./hadoop.env
+    environment:
+      SERVICE_PRECONDITION: "<ip>:9870"
+    deploy:
+      replicas: 4
       placement:
         constraints: [node.role == worker]
 
