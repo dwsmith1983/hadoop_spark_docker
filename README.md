@@ -51,6 +51,9 @@ or user specific settings to change. Most will be marked `<name>`.
   - requirements.txt
   - conda\_requirement\_install.sh
 + Grafana directory
+  - docker-compose-monitor.yml
+  - Docker Swarm Dashboard-1537760402324.json
+  - swarm-dashboard_rev1.json
 + build.sh
 + docker-compose.yml
 + hadoop.env
